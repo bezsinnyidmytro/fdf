@@ -30,6 +30,8 @@ typedef struct		s_env {
 	// int				r_z;
 	t_point			*cntr;
 	t_point			***map;
+	int				len_p;
+	int				len_l;
 	int				width;
 	int				height;
 }					t_env;

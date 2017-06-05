@@ -9,6 +9,33 @@ void		error_call(char *message)
 	exit(1);
 }
 
+void		free_env(t_env *env)
+{
+	int		i;
+	int		j;
+
+	// if (env->mlx)
+	// 	free(env->mlx);
+	// if (env->win)
+	// 	free(env->win);
+	// if (env->img)
+	// 	free(env->img);
+	// if (env->cntr)
+	// 	free(env->cntr);
+	if (env->map)
+	{
+		i = -1;
+		while (++i < env->len_l)
+		{
+			j = -1;
+			while (++j < env->len_p)
+				free(env->map[i][j]);
+			free(env->map[i]);
+		}
+		free(env->map);
+	}
+}
+
 void		strarr_free(char **str_arr)
 {
 	char	*to_free;
@@ -40,7 +67,17 @@ int			count_p(char **str_arr)
 	return (p_c);
 }
 
-void		check_map(char *file_name)
+int			*parse_size(int lines, int points)
+{
+	int		*sizes;
+
+	sizes = (int *)malloc(sizeof(int) * 2);
+	sizes[0] = lines;
+	sizes[1] = points;
+	return (sizes);
+}
+
+int			*check_map(char *file_name)
 {
 	int		fd;
 	char	**str_arr;
@@ -75,9 +112,11 @@ void		check_map(char *file_name)
 		strarr_free(str_arr);
 		free(str_arr);
 	}
+	close(fd);
+	return (parse_size(l_count, p_count));
 }
 
-void		check_file(char *file_name)
+int			*check_file(char *file_name)
 {
 	int		fd;
 	char	test;
@@ -88,24 +127,94 @@ void		check_file(char *file_name)
 	if (fd < 0 || (read(fd, &test, 1) < 1))
 		error_call("Map error. File doesn't exist or is empty");
 	close(fd);
-	check_map(file_name);
+	return (check_map(file_name));
 }
 
-void		process_file(char *file_name)
+t_point		***init_map(int *sizes)
 {
-	int		fd;
+	// Check for number of lines 1 and colls 1 !!!!!!!!!
+	t_point	***map;
+	int		i;
+	int		j;
 
-	check_file(file_name);
-	fd = open(file_name, O_RDONLY);
+	map = (t_point ***)malloc(sizeof(t_point **) * sizes[0]);
+	i = -1;
+	while (++i < sizes[0])
+	{
+		map[i] = (t_point **)malloc(sizeof(t_point *) * sizes[1]);
+		j = -1;
+		while (++j < sizes[1])
+			map[i][j] = (t_point *)malloc(sizeof(t_point));
+	}
+	return (map);
+}
 
+t_env		*init_env(int *sizes)
+{
+	t_env	*env;
+
+	env = (t_env *)malloc(sizeof(t_env));
+	env->map = init_map(sizes);
+	env->len_l = sizes[0];
+	env->len_p = sizes[1];
+	return (env);
+}
+
+void		process_file(char *file_name, t_env **env)
+{
+	//int		fd;
+	int		*sizes;
+
+	sizes = check_file(file_name);
+	(*env) = init_env(sizes);
+	free(sizes);
+
+	int 	i = -1;
+	int		j;
+	while (++i < (*env)->len_l)
+	{
+		j = -1;
+		while (++j < (*env)->len_p)
+		{
+			(*env)->map[i][j]->x = (double)(i + 1);
+			(*env)->map[i][j]->y = (double)(j + 1);
+			(*env)->map[i][j]->z = 42.0;
+		}
+	}
+
+	ft_printf("X: %.1lf, Y: %.1lf, Z: %.1lf\t", (*env)->map[0][0]->x, (*env)->map[0][0]->y, (*env)->map[0][0]->z);		// leaks in PRINTF with lf conversion
+	// i = -1;
+	// while (++i < (*env)->len_l)
+	// {
+	// 	j = -1;
+	// 	while (++j < (*env)->len_p)
+	// 	{
+	// 		ft_printf("X: %.1lf, Y: %.1lf, Z: %.1lf\t", (*env)->map[i][j]->x, (*env)->map[i][j]->y, (*env)->map[i][j]->z);
+	// 	}
+	// 	ft_printf("\n");
+	// }
+	//fd = open(file_name, O_RDONLY);
+}
+
+int			main1(int ac, char **av)
+{
+	t_env	*env;
+
+	if (ac > 1)
+	{
+		process_file(av[1], &env);
+		free_env(env);
+		free(env);
+	}
+	else
+		ft_printf("Usage: ./fdf <path to map>\n");
+	//sleep(1232343);
+	return (1);
 }
 
 int			main(int ac, char **av)
 {
-	if (ac > 1)
-		process_file(av[1]);
-	else
-		ft_printf("Usage: ./fdf <path to map>\n");
-	sleep(1232343);
+	main1(ac, av);
+	sleep(12323453);
 	return (1);
 }
