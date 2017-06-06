@@ -12,14 +12,42 @@ int			key_hook(int keycode, t_env *env)
 	}
 	if (keycode == KRXL)
 	{
-		env->rx = -10;
+		env->rx -= 10;
 		mlx_clear_window(env->mlx, env->win);
 		expose_points(env);
 		draw_lines(env);
 	}
 	if (keycode == KRXR)
 	{
-		env->rx = 10;
+		env->rx += 10;
+		mlx_clear_window(env->mlx, env->win);
+		expose_points(env);
+		draw_lines(env);
+	}
+	if (keycode == KRYL)
+	{
+		env->ry -= 10;
+		mlx_clear_window(env->mlx, env->win);
+		expose_points(env);
+		draw_lines(env);
+	}
+	if (keycode == KRYR)
+	{
+		env->ry += 10;
+		mlx_clear_window(env->mlx, env->win);
+		expose_points(env);
+		draw_lines(env);
+	}
+	if (keycode == KRZL)
+	{
+		env->rz -= 10;
+		mlx_clear_window(env->mlx, env->win);
+		expose_points(env);
+		draw_lines(env);
+	}
+	if (keycode == KRZR)
+	{
+		env->rz += 10;
 		mlx_clear_window(env->mlx, env->win);
 		expose_points(env);
 		draw_lines(env);

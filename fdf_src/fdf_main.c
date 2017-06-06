@@ -39,8 +39,9 @@ void		normalize_points(t_env *env)
 		j = -1;
 		while (++j < env->len_p)
 		{
-			env->map[i][j]->x += env->x_off;
-			env->map[i][j]->y += env->y_off; 
+			env->map[i][j]->x = env->map[i][j]->sx + env->x_off;
+			env->map[i][j]->y = env->map[i][j]->sy + env->y_off;
+			env->map[i][j]->z = env->map[i][j]->sz; 
 		}
 	}
 	ft_printf("The math_pi: %lf\n", M_PI);
@@ -63,17 +64,15 @@ void		expose_point(t_point *p, t_env *env)
 
 	if (env)
 		ft_printf("");
-	tx = p->x - WINDOW_W / 2;
-	ty = p->y - WINDOW_H / 2;
-	tz = p->z;
+	ty = p->sy;
+	tz = p->sz;
 
 	// x
 	p->y = WINDOW_H / 2 + ty * cos(d_to_r(rot_x)) + tz * sin(d_to_r(rot_x));
 	p->z = -ty * sin(d_to_r(rot_x)) + tz * cos(d_to_r(rot_x));
 
 	// y
-	tx = p->x - WINDOW_W / 2;
-	ty = p->y - WINDOW_H / 2;
+	tx = p->sx;
 	tz = p->z;
 	p->x = WINDOW_W / 2 + tx * cos(d_to_r(rot_y)) + tz * sin(d_to_r(rot_y));
 	p->z = -tx * sin(d_to_r(rot_y)) + tz * cos(d_to_r(rot_y));
@@ -82,13 +81,9 @@ void		expose_point(t_point *p, t_env *env)
 	//z
 	tx = p->x - WINDOW_W / 2;
 	ty = p->y - WINDOW_H / 2;
-	tz = p->z;
 	p->x = WINDOW_W / 2 + tx * cos(d_to_r(rot_z)) - ty * sin(d_to_r(rot_z));
 	p->y = WINDOW_H / 2 + tx * sin(d_to_r(rot_z)) + ty * cos(d_to_r(rot_z));
-
-	// env->rx = 0;
-	// env->ry = 0;
-	// env->rz = 0;
+	//ft_printf("X: %i, Y: %i, Z: %i\n", p->x, p->y, p->z);
 }
 
 void		expose_points(t_env *env)
@@ -100,8 +95,14 @@ void		expose_points(t_env *env)
 	{
 		j = -1;
 		while (++j < env->len_p)
+		{
 			expose_point(env->map[i][j], env);
+			//ft_printf("X: %i, Y: %i, Z: %i\n", env->map[i][j]->x, env->map[i][j]->y, env->map[i][j]->z);
+		}
 	}
+	// env->rx = 0;
+	// env->ry = 0;
+	// env->rz = 0;
 }
 
 void		draw_lines(t_env *env)
@@ -136,7 +137,7 @@ int			main1(int ac, char **av)
 	{
 		process_file(av[1], &env);
 
-
+		//ft_printf("X %i, Y %i, Z %i\n", env->map[1][1]->sx, env->map[1][1]->sy, env->map[1][1]->sz);
 		//brasenhem_line(env->mlx, env->win, 100, 100, 300, 300);
 		normalize_points(env);
 		expose_points(env);

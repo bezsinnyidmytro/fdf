@@ -29,6 +29,10 @@
 # define KESC	53
 # define KRXL	83
 # define KRXR	85
+# define KRYL	84
+# define KRYR	87
+# define KRZL	86
+# define KRZR	88
 
 
 typedef struct		s_point {

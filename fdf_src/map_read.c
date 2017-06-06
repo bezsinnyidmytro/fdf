@@ -99,9 +99,9 @@ void		process_file(char *file_name, t_env **env)
 		j = -1;
 		while (str_arr[++j])
 		{
-			(*env)->map[i][j]->x = (j - (*env)->len_p / 2) * XSTEP;
-			(*env)->map[i][j]->y = (i - (*env)->len_l / 2) * YSTEP;
-			(*env)->map[i][j]->z = ft_atoi(str_arr[j]);	
+			(*env)->map[i][j]->sx = (j - (*env)->len_p / 2) * XSTEP;
+			(*env)->map[i][j]->sy = (i - (*env)->len_l / 2) * YSTEP;
+			(*env)->map[i][j]->sz = ft_atoi(str_arr[j]);	
 		}
 		strarr_free(str_arr);
 		free(line);
