@@ -1,4 +1,6 @@
 #include "fdf.h"
+#include <math.h>
+#include <mlx.h>
 
 void		error_call(char *message)
 {
@@ -7,6 +9,29 @@ void		error_call(char *message)
 	ft_printf("%s", KNRM);
 	sleep(1232354);
 	exit(1);
+}
+
+void		brasenhem_line(void *mlx, void *win, int x0, int y0, int x1, int y1)
+{
+	int		dx;
+	int		dy;
+	int		sx;
+	int		sy;
+	int		err;
+	int		e2;
+
+	dx = abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
+	dy = -abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
+	err = dx + dy;
+	while (1)
+	{
+		mlx_pixel_put(mlx, win, x0, y0, 0x00000FF00);
+		if (x0 == x1 && y0 == y1)
+			break;
+		e2 = 2 * err;
+		if (e2 > dy) { err += dy; x0 += sx; }
+		if (e2 < dx) { err += dx; y0 += sy; }
+	}
 }
 
 void		free_env(t_env *env)
@@ -176,13 +201,13 @@ void		process_file(char *file_name, t_env **env)
 		j = -1;
 		while (++j < (*env)->len_p)
 		{
-			(*env)->map[i][j]->x = (double)(i + 1);
-			(*env)->map[i][j]->y = (double)(j + 1);
+			(*env)->map[i][j]->x = (double)(j + 1) * XSTEP;
+			(*env)->map[i][j]->y = (double)(i + 1) * YSTEP;
 			(*env)->map[i][j]->z = 42.0;
 		}
 	}
 
-	ft_printf("X: %.1lf, Y: %.1lf, Z: %.1lf\t", (*env)->map[0][0]->x, (*env)->map[0][0]->y, (*env)->map[0][0]->z);		// leaks in PRINTF with lf conversion
+	//ft_printf("X: %.1lf, Y: %.1lf, Z: %.1lf\t", (*env)->map[0][0]->x, (*env)->map[0][0]->y, (*env)->map[0][0]->z);		// leaks in PRINTF with lf conversion
 	// i = -1;
 	// while (++i < (*env)->len_l)
 	// {
@@ -212,9 +237,30 @@ int			main1(int ac, char **av)
 	return (1);
 }
 
+int			main2(int ac, char **av)
+{
+	void	*mlx;
+	void	*win;
+
+	if (ac > 1 && av[1])
+	{
+		mlx = mlx_init();
+		win = mlx_new_window(mlx, 640, 480, "fdf Brasenhams test");
+		brasenhem_line(mlx, win, 100, 100, 300, 300);
+		mlx_loop(mlx);
+		// process_file(av[1], &env);
+		// free_env(env);
+		// free(env);
+	}
+	else
+		ft_printf("Usage: ./fdf <path to map>\n");
+	//sleep(1232343);
+	return (1);
+}
+
 int			main(int ac, char **av)
 {
-	main1(ac, av);
+	main2(ac, av);
 	sleep(12323453);
 	return (1);
 }

@@ -14,6 +14,9 @@
 # define KCYN  "\x1B[96m"
 # define KWHT  "\x1B[97m"
 
+# define XSTEP 10.0
+# define YSTEP 10.0
+
 typedef struct		s_point {
 	double			x;
 	double			y;
