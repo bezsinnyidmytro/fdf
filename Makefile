@@ -13,7 +13,12 @@
 NAME =		fdf
 
 SRC_DIR = 	fdf_src/
-FILES =		fdf_main.c
+FILES =		fdf_main.c \
+			errors.c \
+			free_functions.c \
+			init_functions.c \
+			map_read.c \
+			key_hooks.c
 SRC = 		$(addprefix $(SRC_DIR), $(FILES))
 OBJ =		$(SRC:.c=.o)
 

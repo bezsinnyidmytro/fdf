@@ -44,4 +44,16 @@ typedef struct		s_env {
 	int				height;
 }					t_env;
 
+void				process_file(char *file_name, t_env **env);
+
+int					key_hook(int keycode, t_env *env);
+
+t_point				***init_map(int *sizes);
+t_env				*init_env(int *sizes);
+
+void				free_env(t_env *env);
+void				strarr_free(char **str_arr);
+
+void				error_call(char *message);
+
 #endif
