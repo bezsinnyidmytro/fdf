@@ -39,10 +39,13 @@ void		free_env(t_env *env)
 	int		i;
 	int		j;
 
+	// if (env->win)
+	// {
+	// 	//free(env->win);
+	// 	mlx_destroy_window(env->mlx, env->win);
+	// }
 	// if (env->mlx)
 	// 	free(env->mlx);
-	// if (env->win)
-	// 	free(env->win);
 	// if (env->img)
 	// 	free(env->img);
 	// if (env->cntr)
@@ -179,6 +182,10 @@ t_env		*init_env(int *sizes)
 	t_env	*env;
 
 	env = (t_env *)malloc(sizeof(t_env));
+	// env->mlx = mlx_init();
+	// env->win = mlx_new_window(env->mlx, WINDOW_W, WINDOW_H, "42fdf");
+	// env->img = NULL;
+	// env->cntr = NULL;
 	env->map = init_map(sizes);
 	env->len_l = sizes[0];
 	env->len_p = sizes[1];
@@ -207,7 +214,7 @@ void		process_file(char *file_name, t_env **env)
 		}
 	}
 
-	//ft_printf("X: %.1lf, Y: %.1lf, Z: %.1lf\t", (*env)->map[0][0]->x, (*env)->map[0][0]->y, (*env)->map[0][0]->z);		// leaks in PRINTF with lf conversion
+	ft_printf("X: %.1lf, Y: %.1lf, Z: %.1lf\t", (*env)->map[0][0]->x, (*env)->map[0][0]->y, (*env)->map[0][0]->z);		// leaks in PRINTF with lf conversion
 	// i = -1;
 	// while (++i < (*env)->len_l)
 	// {
@@ -233,7 +240,7 @@ int			main1(int ac, char **av)
 	}
 	else
 		ft_printf("Usage: ./fdf <path to map>\n");
-	//sleep(1232343);
+	sleep(1232343);
 	return (1);
 }
 
@@ -247,6 +254,7 @@ int			main2(int ac, char **av)
 		mlx = mlx_init();
 		win = mlx_new_window(mlx, 640, 480, "fdf Brasenhams test");
 		brasenhem_line(mlx, win, 100, 100, 300, 300);
+		// mlx_hook(win, 2, 3, key_hook, NULL);
 		mlx_loop(mlx);
 		// process_file(av[1], &env);
 		// free_env(env);
@@ -260,7 +268,7 @@ int			main2(int ac, char **av)
 
 int			main(int ac, char **av)
 {
-	main2(ac, av);
+	main1(ac, av);
 	sleep(12323453);
 	return (1);
 }

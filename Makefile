@@ -26,7 +26,7 @@ $(LIBFT):
 	@make -C ./libft
 
 $(NAME): $(OBJ)
-	gcc -o $(NAME) $(OBJ) -L ./libft -lft -L minilibx -lmlx -framework OpenGL -framework AppKit
+	gcc -o $(NAME) $(OBJ) -L ./libft -lft -lmlx -framework OpenGL -framework AppKit
 
 %.o: %.c
 	gcc -c $(FLAGS) -c -o $@ $<

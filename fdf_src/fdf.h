@@ -5,17 +5,22 @@
 # include <math.h>
 # include "../libft/src/libft.h"
 
-# define KNRM  "\x1B[0m"
-# define KRED  "\x1B[91m"
-# define KGRN  "\x1B[92m"
-# define KYEL  "\x1B[93m"
-# define KBLU  "\x1B[94m"
-# define KMAG  "\x1B[95m"
-# define KCYN  "\x1B[96m"
-# define KWHT  "\x1B[97m"
+# define KNRM 	"\x1B[0m"
+# define KRED 	"\x1B[91m"
+# define KGRN 	"\x1B[92m"
+# define KYEL 	"\x1B[93m"
+# define KBLU 	"\x1B[94m"
+# define KMAG 	"\x1B[95m"
+# define KCYN 	"\x1B[96m"
+# define KWHT 	"\x1B[97m"
 
-# define XSTEP 10.0
-# define YSTEP 10.0
+# define WINDOW_W	1360
+# define WINDOW_H	768
+
+# define XSTEP 	10.0
+# define YSTEP 	10.0
+
+# define ESC	53	
 
 typedef struct		s_point {
 	double			x;

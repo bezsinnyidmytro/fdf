@@ -38,6 +38,7 @@ static void		float_res_fill(int *sizes, char **tmp, char **res)
 		}
 		(*res)[j] = (*tmp)[i];
 	}
+	free(sizes);
 }
 
 int				*parse_values(int a, int b, int c)
