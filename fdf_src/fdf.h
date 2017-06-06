@@ -14,18 +14,30 @@
 # define KCYN 	"\x1B[96m"
 # define KWHT 	"\x1B[97m"
 
+# define PI 		3.1415926535
+
 # define WINDOW_W	1360
 # define WINDOW_H	768
 
-# define XSTEP 	10.0
-# define YSTEP 	10.0
+# define XSTEP 	30
+# define YSTEP 	30
 
-# define ESC	53	
+# define ROT_X	30
+# define ROT_Y	-30
+# define ROT_Z	30
+
+# define KESC	53
+# define KRXL	83
+# define KRXR	85
+
 
 typedef struct		s_point {
-	double			x;
-	double			y;
-	double			z;
+	int				x;
+	int				y;
+	int				z;
+	int				sx;
+	int				sy;
+	int				sz;
 	int				color;
 }					t_point;
 
@@ -33,15 +45,17 @@ typedef struct		s_env {
 	void			*mlx;
 	void			*win;
 	void			*img;
-	// int				r_x;
-	// int				r_y;
-	// int				r_z;
+	int				rx;
+	int				ry;
+	int				rz;
 	t_point			*cntr;
 	t_point			***map;
 	int				len_p;
 	int				len_l;
 	int				width;
 	int				height;
+	int				x_off;
+	int				y_off;
 }					t_env;
 
 void				process_file(char *file_name, t_env **env);
@@ -55,5 +69,11 @@ void				free_env(t_env *env);
 void				strarr_free(char **str_arr);
 
 void				error_call(char *message);
+
+void				brasenham_line(void *mlx, void *win, int x0, int y0, int x1, int y1);
+
+void				expose_points(t_env *env);
+
+void				draw_lines(t_env *env);
 
 #endif
