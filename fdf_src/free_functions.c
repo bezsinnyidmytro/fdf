@@ -5,7 +5,6 @@ void		free_env(t_env *env)
 	int		i;
 	int		j;
 
-
 	if (env->win)
 	{
 		//free(env->win);
@@ -13,8 +12,6 @@ void		free_env(t_env *env)
 	}
 	if (env->mlx)
 		free(env->mlx);
-
-	ft_printf("i: %i, j: %i\n", 2, 2);
 	if (env->img)
 		free(env->img);
 	if (env->cntr)
@@ -34,6 +31,7 @@ void		free_env(t_env *env)
 		}
 		free(env->map);
 	}
+	ft_printf("i: %i, j: %i\n", 2, 2);
 }
 
 void		strarr_free(char **str_arr)

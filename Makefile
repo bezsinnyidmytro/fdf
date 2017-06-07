@@ -18,7 +18,8 @@ FILES =		fdf_main.c \
 			free_functions.c \
 			init_functions.c \
 			map_read.c \
-			key_hooks.c
+			key_hooks.c \
+			expose_points.c
 SRC = 		$(addprefix $(SRC_DIR), $(FILES))
 OBJ =		$(SRC:.c=.o)
 

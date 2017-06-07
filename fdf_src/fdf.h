@@ -19,8 +19,7 @@
 # define WINDOW_W	1360
 # define WINDOW_H	768
 
-# define XSTEP 	30
-# define YSTEP 	30
+# define ZOOM 	30
 
 # define ROT_X	30
 # define ROT_Y	-30
@@ -33,6 +32,11 @@
 # define KRYR	87
 # define KRZL	86
 # define KRZR	88
+
+# define ZIN	69
+# define ZOUT	78
+# define ZUP	67
+# define ZDOWN	75
 
 
 typedef struct		s_point {
@@ -52,6 +56,8 @@ typedef struct		s_env {
 	int				rx;
 	int				ry;
 	int				rz;
+	int				zoom;
+	float			z_mult;
 	t_point			*cntr;
 	t_point			***map;
 	int				len_p;
@@ -76,6 +82,7 @@ void				error_call(char *message);
 
 void				brasenham_line(void *mlx, void *win, int x0, int y0, int x1, int y1);
 
+void				process_zoom(t_env *env);
 void				expose_points(t_env *env);
 
 void				draw_lines(t_env *env);

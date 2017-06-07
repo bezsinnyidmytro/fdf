@@ -23,87 +23,29 @@ void		brasenham_line(void *mlx, void *win, int x0, int y0, int x1, int y1)
 	}
 }
 
-void		normalize_points(t_env *env)
-{
-	int		i = -1;
-	int		j;
-	//int		map_width = env->len_p * XSTEP;
-	//int		map_height = env->len_l * YSTEP;
+// void		normalize_points(t_env *env)
+// {
+// 	int		i = -1;
+// 	int		j;
+// 	//int		map_width = env->len_p * XSTEP;
+// 	//int		map_height = env->len_l * YSTEP;
 
-	env->x_off = (WINDOW_W) / 2;
-	env->y_off = (WINDOW_H) / 2;
+// 	env->x_off = (WINDOW_W) / 2;
+// 	env->y_off = (WINDOW_H) / 2;
 
-	ft_printf("The map offset is: %i : %i\n", env->x_off, env->y_off);
-	while (++i < env->len_l)
-	{
-		j = -1;
-		while (++j < env->len_p)
-		{
-			env->map[i][j]->x = env->map[i][j]->sx + env->x_off;
-			env->map[i][j]->y = env->map[i][j]->sy + env->y_off;
-			env->map[i][j]->z = env->map[i][j]->sz; 
-		}
-	}
-	ft_printf("The math_pi: %lf\n", M_PI);
-}
-
-double		d_to_r(int deg)
-{
-	return ((double)deg / 180.0 * M_PI);
-}
-
-void		expose_point(t_point *p, t_env *env)
-{
-	int		tx;
-	int		ty;
-	int		tz;
-
-	int 	rot_x = env->rx;
-	int 	rot_y = env->ry;
-	int 	rot_z = env->rz;
-
-	if (env)
-		ft_printf("");
-	ty = p->sy;
-	tz = p->sz;
-
-	// x
-	p->y = WINDOW_H / 2 + ty * cos(d_to_r(rot_x)) + tz * sin(d_to_r(rot_x));
-	p->z = -ty * sin(d_to_r(rot_x)) + tz * cos(d_to_r(rot_x));
-
-	// y
-	tx = p->sx;
-	tz = p->z;
-	p->x = WINDOW_W / 2 + tx * cos(d_to_r(rot_y)) + tz * sin(d_to_r(rot_y));
-	p->z = -tx * sin(d_to_r(rot_y)) + tz * cos(d_to_r(rot_y));
-
-
-	//z
-	tx = p->x - WINDOW_W / 2;
-	ty = p->y - WINDOW_H / 2;
-	p->x = WINDOW_W / 2 + tx * cos(d_to_r(rot_z)) - ty * sin(d_to_r(rot_z));
-	p->y = WINDOW_H / 2 + tx * sin(d_to_r(rot_z)) + ty * cos(d_to_r(rot_z));
-	//ft_printf("X: %i, Y: %i, Z: %i\n", p->x, p->y, p->z);
-}
-
-void		expose_points(t_env *env)
-{
-	int		i = -1;
-	int		j;
-
-	while (++i < env->len_l)
-	{
-		j = -1;
-		while (++j < env->len_p)
-		{
-			expose_point(env->map[i][j], env);
-			//ft_printf("X: %i, Y: %i, Z: %i\n", env->map[i][j]->x, env->map[i][j]->y, env->map[i][j]->z);
-		}
-	}
-	// env->rx = 0;
-	// env->ry = 0;
-	// env->rz = 0;
-}
+// 	ft_printf("The map offset is: %i : %i\n", env->x_off, env->y_off);
+// 	while (++i < env->len_l)
+// 	{
+// 		j = -1;
+// 		while (++j < env->len_p)
+// 		{
+// 			env->map[i][j]->x = env->map[i][j]->sx + env->x_off;
+// 			env->map[i][j]->y = env->map[i][j]->sy + env->y_off;
+// 			env->map[i][j]->z = env->map[i][j]->sz; 
+// 		}
+// 	}
+// 	ft_printf("The math_pi: %lf\n", M_PI);
+// }
 
 void		draw_lines(t_env *env)
 {
@@ -129,6 +71,16 @@ void		draw_lines(t_env *env)
 	}
 }
 
+int			close_x(int keycode, t_env *env)
+{
+	if (keycode)
+		ft_printf("");
+	//mlx_destroy_window(env->mlx, env->win);
+	env->win = NULL;
+	free_env(env);
+	exit(0);
+}
+
 int			main1(int ac, char **av)
 {
 	t_env	*env;
@@ -136,10 +88,10 @@ int			main1(int ac, char **av)
 	if (ac > 1)
 	{
 		process_file(av[1], &env);
-
 		//ft_printf("X %i, Y %i, Z %i\n", env->map[1][1]->sx, env->map[1][1]->sy, env->map[1][1]->sz);
 		//brasenhem_line(env->mlx, env->win, 100, 100, 300, 300);
-		normalize_points(env);
+		//normalize_points(env);
+		process_zoom(env);
 		expose_points(env);
 		draw_lines(env);
 		
@@ -159,6 +111,7 @@ int			main1(int ac, char **av)
 		// }
 
 		mlx_hook(env->win, 2, 3, key_hook, env);
+		mlx_hook(env->win, 17, 1L << 17, close_x, env);
 		mlx_loop(env->mlx);
 		//free(env);
 	}
