@@ -13,10 +13,27 @@ void			process_zoom(t_env *env)
 		{
 			env->map[i][j]->x = env->map[i][j]->sx * env->zoom;
 			env->map[i][j]->y = env->map[i][j]->sy * env->zoom;
-			env->map[i][j]->z = env->map[i][j]->sz * env->zoom / 20 * env->z_mult;
+			env->map[i][j]->z = env->map[i][j]->sz * env->zoom / 20 * (10 * env->z_mult) / 10;
 		}
 	}
 	//ft_printf("X %i, Y %i, Z %i\n", env->map[i - 1][j - 1]->x, env->map[i - 1][j - 1]->y, env->map[i - 1][j - 1]->z);
+}
+
+void			process_offset(t_env *env)
+{
+	int			i;
+	int			j;
+
+	i = -1;
+	while (++i < env->len_l)
+	{
+		j = -1;
+		while (++j < env->len_p)
+		{
+			env->map[i][j]->x += env->x_off * env->zoom;
+			env->map[i][j]->y += env->y_off * env->zoom;
+		}
+	}
 }
 
 static double	d_to_r(int deg)

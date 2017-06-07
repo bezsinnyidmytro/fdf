@@ -26,10 +26,13 @@
 # define ROT_Z	30
 
 # define KESC	53
+
 # define KRXL	83
 # define KRXR	85
+
 # define KRYL	84
 # define KRYR	87
+
 # define KRZL	86
 # define KRZR	88
 
@@ -37,6 +40,11 @@
 # define ZOUT	78
 # define ZUP	67
 # define ZDOWN	75
+
+# define MVL	123
+# define MVR	124
+# define MVD	125
+# define MVU	126
 
 
 typedef struct		s_point {
@@ -83,6 +91,7 @@ void				error_call(char *message);
 void				brasenham_line(void *mlx, void *win, int x0, int y0, int x1, int y1);
 
 void				process_zoom(t_env *env);
+void				process_offset(t_env *env);
 void				expose_points(t_env *env);
 
 void				draw_lines(t_env *env);

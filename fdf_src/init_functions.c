@@ -42,5 +42,7 @@ t_env		*init_env(int *sizes)
 	env->map = init_map(sizes);
 	env->len_l = sizes[0];
 	env->len_p = sizes[1];
+	env->x_off = 0;
+	env->y_off = 0;
 	return (env);
 }

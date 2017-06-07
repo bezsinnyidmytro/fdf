@@ -1,5 +1,10 @@
 #include "fdf.h"
 
+int			get_color()
+{
+	return (0x00FF00);
+}
+
 void		brasenham_line(void *mlx, void *win, int x0, int y0, int x1, int y1)
 {
 	int		dx;
@@ -14,7 +19,7 @@ void		brasenham_line(void *mlx, void *win, int x0, int y0, int x1, int y1)
 	err = dx + dy;
 	while (1)
 	{
-		mlx_pixel_put(mlx, win, x0, y0, 0x00000FF00);
+		mlx_pixel_put(mlx, win, x0, y0, get_color());
 		if (x0 == x1 && y0 == y1)
 			break;
 		e2 = 2 * err;
@@ -93,6 +98,7 @@ int			main1(int ac, char **av)
 		//normalize_points(env);
 		process_zoom(env);
 		expose_points(env);
+		process_offset(env);
 		draw_lines(env);
 		
 		// i = env->len_l - 1;

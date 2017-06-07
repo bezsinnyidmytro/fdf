@@ -39,11 +39,11 @@ static int	*check_map(char *file_name)
 	while (get_next_line(fd, &line) > 0)
 	{
 		l_count++;
-		if (!ft_checkstr(line, &ft_isdss))
-		{
-			free(line);
-			error_call("Map error. Bad character");
-		}
+		// if (!ft_checkstr(line, &ft_isdss))
+		// {
+		// 	free(line);
+		// 	error_call("Map error. Bad character");
+		// }
 		str_arr = ft_strsplit(line, ' ');
 		if (l_count > 1)
 		{

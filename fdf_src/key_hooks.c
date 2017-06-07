@@ -16,6 +16,7 @@ int			key_hook(int keycode, t_env *env)
 		mlx_clear_window(env->mlx, env->win);
 		process_zoom(env);
 		expose_points(env);
+		process_offset(env);
 		draw_lines(env);
 	}
 	if (keycode == KRXR)
@@ -24,6 +25,7 @@ int			key_hook(int keycode, t_env *env)
 		mlx_clear_window(env->mlx, env->win);
 		process_zoom(env);
 		expose_points(env);
+		process_offset(env);
 		draw_lines(env);
 	}
 	if (keycode == KRYL)
@@ -32,6 +34,7 @@ int			key_hook(int keycode, t_env *env)
 		mlx_clear_window(env->mlx, env->win);
 		process_zoom(env);
 		expose_points(env);
+		process_offset(env);
 		draw_lines(env);
 	}
 	if (keycode == KRYR)
@@ -40,6 +43,7 @@ int			key_hook(int keycode, t_env *env)
 		mlx_clear_window(env->mlx, env->win);
 		process_zoom(env);
 		expose_points(env);
+		process_offset(env);
 		draw_lines(env);
 	}
 	if (keycode == KRZL)
@@ -48,6 +52,7 @@ int			key_hook(int keycode, t_env *env)
 		mlx_clear_window(env->mlx, env->win);
 		process_zoom(env);
 		expose_points(env);
+		process_offset(env);
 		draw_lines(env);
 	}
 	if (keycode == KRZR)
@@ -56,6 +61,7 @@ int			key_hook(int keycode, t_env *env)
 		mlx_clear_window(env->mlx, env->win);
 		process_zoom(env);
 		expose_points(env);
+		process_offset(env);
 		draw_lines(env);
 	}
 	if (keycode == ZIN)
@@ -64,6 +70,7 @@ int			key_hook(int keycode, t_env *env)
 		mlx_clear_window(env->mlx, env->win);
 		process_zoom(env);
 		expose_points(env);
+		process_offset(env);
 		draw_lines(env);
 	}
 	if (keycode == ZOUT)
@@ -72,6 +79,7 @@ int			key_hook(int keycode, t_env *env)
 		mlx_clear_window(env->mlx, env->win);
 		process_zoom(env);
 		expose_points(env);
+		process_offset(env);
 		draw_lines(env);
 	}
 	if (keycode == ZUP)
@@ -80,6 +88,7 @@ int			key_hook(int keycode, t_env *env)
 		mlx_clear_window(env->mlx, env->win);
 		process_zoom(env);
 		expose_points(env);
+		process_offset(env);
 		draw_lines(env);
 	}
 	if (keycode == ZDOWN)
@@ -88,6 +97,43 @@ int			key_hook(int keycode, t_env *env)
 		mlx_clear_window(env->mlx, env->win);
 		process_zoom(env);
 		expose_points(env);
+		process_offset(env);
+		draw_lines(env);
+	}
+	if (keycode == MVL)
+	{
+		env->x_off--;
+		mlx_clear_window(env->mlx, env->win);
+		process_zoom(env);
+		expose_points(env);
+		process_offset(env);
+		draw_lines(env);
+	}
+	if (keycode == MVR)
+	{
+		env->x_off++;
+		mlx_clear_window(env->mlx, env->win);
+		process_zoom(env);
+		expose_points(env);
+		process_offset(env);
+		draw_lines(env);
+	}
+	if (keycode == MVD)
+	{
+		env->y_off++;
+		mlx_clear_window(env->mlx, env->win);
+		process_zoom(env);
+		expose_points(env);
+		process_offset(env);
+		draw_lines(env);
+	}
+	if (keycode == MVU)
+	{
+		env->y_off--;
+		mlx_clear_window(env->mlx, env->win);
+		process_zoom(env);
+		expose_points(env);
+		process_offset(env);
 		draw_lines(env);
 	}
 	return (0);
