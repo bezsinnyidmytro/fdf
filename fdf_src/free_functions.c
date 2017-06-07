@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_functions.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbezsinn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/06/07 11:49:26 by dbezsinn          #+#    #+#             */
+/*   Updated: 2017/06/07 11:49:28 by dbezsinn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void		free_env(t_env *env)
 {
-	int		i;
+	int		i;		// что когда нужно фришить - не понятно при выходе "крестиком" - ошибка автобуа или сегфолт
 	int		j;
 
 	if (env->win)
@@ -25,7 +37,6 @@ void		free_env(t_env *env)
 		}
 		free(env->map);
 	}
-	//ft_printf("i: %i, j: %i\n", 2, 2);
 }
 
 void		strarr_free(char **str_arr)
@@ -40,5 +51,4 @@ void		strarr_free(char **str_arr)
 		free(to_free);
 		str_arr++;
 	}
-	//free(str_arr);
 }

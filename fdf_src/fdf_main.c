@@ -33,8 +33,10 @@ void		brasenham_line(void *mlx, void *win, t_point t0, t_point t1)
 	int		err;
 	int		e2;
 
-	dx = abs(t1.x - t0.x), sx = t0.x < t1.x ? 1 : -1;
-	dy = -abs(t1.y - t0.y), sy = t0.y < t1.y ? 1 : -1;
+	dx = abs(t1.x - t0.x);
+	sx = t0.x < t1.x ? 1 : -1;
+	dy = -abs(t1.y - t0.y);
+	sy = t0.y < t1.y ? 1 : -1;
 	err = dx + dy;
 	while (1)
 	{
@@ -42,8 +44,16 @@ void		brasenham_line(void *mlx, void *win, t_point t0, t_point t1)
 		if (t0.x == t1.x && t0.y == t1.y)
 			break;
 		e2 = 2 * err;
-		if (e2 > dy) { err += dy; t0.x += sx; }
-		if (e2 < dx) { err += dx; t0.y += sy; }
+		if (e2 > dy)
+		{
+			err += dy;
+			t0.x += sx;
+		}
+		if (e2 < dx)
+		{
+			err += dx;
+			t0.y += sy;
+		}
 	}
 }
 

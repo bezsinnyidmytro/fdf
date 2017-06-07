@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbezsinn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/06/07 11:45:41 by dbezsinn          #+#    #+#             */
+/*   Updated: 2017/06/07 11:45:59 by dbezsinn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FDF_H
 # define FDF_H
 
@@ -46,7 +58,6 @@
 # define MVD	125
 # define MVU	126
 
-
 typedef struct		s_point {
 	int				x;
 	int				y;
@@ -77,25 +88,18 @@ typedef struct		s_env {
 }					t_env;
 
 void				process_file(char *file_name, t_env **env);
-
 int					key_hook(int keycode, t_env *env);
-
 t_point				***init_map(int *sizes);
 t_env				*init_env(int *sizes);
-
 void				free_env(t_env *env);
 void				strarr_free(char **str_arr);
-
 void				error_call(char *message);
-
-void				brasenham_line(void *mlx, void *win, t_point t0, t_point t1);
-
+void				brasenham_line(void *mlx, void *win, t_point t0,
+									t_point t1);
 void				process_zoom(t_env *env);
 void				process_offset(t_env *env);
 void				expose_points(t_env *env);
-
 void				draw_lines(t_env *env);
-
 void				get_color(t_point *p, int z_mult);
 
 #endif

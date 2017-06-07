@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_read.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbezsinn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/06/07 11:57:06 by dbezsinn          #+#    #+#             */
+/*   Updated: 2017/06/07 11:57:10 by dbezsinn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 static int	count_p(char **str_arr)
@@ -47,7 +59,7 @@ static int	*check_map(char *file_name)
 				free(line);
 				strarr_free(str_arr);
 				free(str_arr);
-				error_call("Map error. Inconsistent number of points");	
+				error_call("Map error. Inconsistent number of points");
 			}
 		}
 		p_count = count_p(str_arr);
@@ -83,8 +95,7 @@ void		process_file(char *file_name, t_env **env)
 	int			j;
 
 	fd = open(file_name, O_RDONLY);
-
-	sizes = check_file(file_name);
+	sizes = check_file(file_name);		// check sizes for being 1 row or 1 col
 	(*env) = init_env(sizes);
 	free(sizes);
 	ft_printf("Segfault after\n");
@@ -98,7 +109,7 @@ void		process_file(char *file_name, t_env **env)
 			(*env)->map[i][j]->sx = (j - (*env)->len_p / 2);
 			(*env)->map[i][j]->sy = (i - (*env)->len_l / 2);
 			(*env)->map[i][j]->sz = ft_atoi(str_arr[j]);
-			//get_color((*env)->map[i][j]);	
+			//get_color((*env)->map[i][j]);
 		}
 		strarr_free(str_arr);
 		free(line);
