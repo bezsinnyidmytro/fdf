@@ -21,17 +21,17 @@
 
 # define ZOOM 	30
 
-# define ROT_X	30
-# define ROT_Y	-30
-# define ROT_Z	30
+# define ROT_X	0
+# define ROT_Y	0
+# define ROT_Z	0
 
 # define KESC	53
 
-# define KRXL	83
-# define KRXR	85
+# define KRXL	87
+# define KRXR	84
 
-# define KRYL	84
-# define KRYR	87
+# define KRYL	83
+# define KRYR	85
 
 # define KRZL	86
 # define KRZR	88
@@ -65,7 +65,7 @@ typedef struct		s_env {
 	int				ry;
 	int				rz;
 	int				zoom;
-	float			z_mult;
+	int				z_mult;
 	t_point			*cntr;
 	t_point			***map;
 	int				len_p;

@@ -84,7 +84,7 @@ int			key_hook(int keycode, t_env *env)
 	}
 	if (keycode == ZUP)
 	{
-		env->z_mult += 0.2;
+		env->z_mult += 1;
 		mlx_clear_window(env->mlx, env->win);
 		process_zoom(env);
 		expose_points(env);
@@ -93,7 +93,7 @@ int			key_hook(int keycode, t_env *env)
 	}
 	if (keycode == ZDOWN)
 	{
-		env->z_mult -= 0.2;
+		env->z_mult -= 1;
 		mlx_clear_window(env->mlx, env->win);
 		process_zoom(env);
 		expose_points(env);

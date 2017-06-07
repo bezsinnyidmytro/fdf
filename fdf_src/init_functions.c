@@ -37,7 +37,7 @@ t_env		*init_env(int *sizes)
 	env->ry = ROT_Y;
 	env->rz = ROT_Z;
 	env->zoom = ZOOM;
-	env->z_mult = 1.0;
+	env->z_mult = 1;
 	env->cntr = NULL;
 	env->map = init_map(sizes);
 	env->len_l = sizes[0];
