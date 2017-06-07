@@ -88,12 +88,14 @@ void				strarr_free(char **str_arr);
 
 void				error_call(char *message);
 
-void				brasenham_line(void *mlx, void *win, int x0, int y0, int x1, int y1);
+void				brasenham_line(void *mlx, void *win, t_point t0, t_point t1);
 
 void				process_zoom(t_env *env);
 void				process_offset(t_env *env);
 void				expose_points(t_env *env);
 
 void				draw_lines(t_env *env);
+
+void				get_color(t_point *p, int z_mult);
 
 #endif

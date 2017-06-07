@@ -39,11 +39,6 @@ static int	*check_map(char *file_name)
 	while (get_next_line(fd, &line) > 0)
 	{
 		l_count++;
-		// if (!ft_checkstr(line, &ft_isdss))
-		// {
-		// 	free(line);
-		// 	error_call("Map error. Bad character");
-		// }
 		str_arr = ft_strsplit(line, ' ');
 		if (l_count > 1)
 		{
@@ -102,23 +97,12 @@ void		process_file(char *file_name, t_env **env)
 		{
 			(*env)->map[i][j]->sx = (j - (*env)->len_p / 2);
 			(*env)->map[i][j]->sy = (i - (*env)->len_l / 2);
-			(*env)->map[i][j]->sz = ft_atoi(str_arr[j]);	
+			(*env)->map[i][j]->sz = ft_atoi(str_arr[j]);
+			//get_color((*env)->map[i][j]);	
 		}
 		strarr_free(str_arr);
 		free(line);
 		free(str_arr);
 	}
 	close(fd);
-	//ft_printf("X: %.1lf, Y: %.1lf, Z: %.1lf\t", (*env)->map[0][0]->x, (*env)->map[0][0]->y, (*env)->map[0][0]->z);		// leaks in PRINTF with lf conversion
-	// i = -1;
-	// while (++i < (*env)->len_l)
-	// {
-	// 	j = -1;
-	// 	while (++j < (*env)->len_p)
-	// 	{
-	// 		ft_printf("%5.1lf", (*env)->map[i][j]->z);
-	// 	}
-	// 	ft_printf("\n");
-	// }
-	//fd = open(file_name, O_RDONLY);
 }

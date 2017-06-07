@@ -8,6 +8,7 @@ int			key_hook(int keycode, t_env *env)
 		mlx_destroy_window(env->mlx, env->win);
 		env->win = NULL;
 		free_env(env);
+		//sleep(12334);
 		exit(0);
 	}
 	if (keycode == KRXL)

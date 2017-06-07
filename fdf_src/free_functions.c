@@ -6,10 +6,7 @@ void		free_env(t_env *env)
 	int		j;
 
 	if (env->win)
-	{
-		//free(env->win);
 		mlx_destroy_window(env->mlx, env->win);
-	}
 	if (env->mlx)
 		free(env->mlx);
 	if (env->img)
@@ -23,15 +20,12 @@ void		free_env(t_env *env)
 		{
 			j = -1;
 			while (++j < env->len_p)
-			{
-				//ft_printf("i: %i, j: %i\n", i, j);
 				free(env->map[i][j]);
-			}
 			free(env->map[i]);
 		}
 		free(env->map);
 	}
-	ft_printf("i: %i, j: %i\n", 2, 2);
+	//ft_printf("i: %i, j: %i\n", 2, 2);
 }
 
 void		strarr_free(char **str_arr)
@@ -42,7 +36,6 @@ void		strarr_free(char **str_arr)
 		return ;
 	while (*str_arr)
 	{
-		//printf("Freed\n");
 		to_free = *str_arr;
 		free(to_free);
 		str_arr++;
