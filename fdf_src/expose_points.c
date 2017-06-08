@@ -26,7 +26,7 @@ void			process_zoom(t_env *env)
 			env->map[i][j]->x = env->map[i][j]->sx * env->zoom;
 			env->map[i][j]->y = env->map[i][j]->sy * env->zoom;
 			env->map[i][j]->z = env->map[i][j]->sz * (double)(env->zoom)
-				/ 20.0 * env->z_mult;
+				/ 20.0 * (double)env->z_mult;
 		}
 	}
 }
@@ -35,15 +35,17 @@ void			process_offset(t_env *env)
 {
 	int			i;
 	int			j;
+	int			zoom;
 
+	zoom = (env->zoom > 30) ? env->zoom : 30;
 	i = -1;
 	while (++i < env->len_l)
 	{
 		j = -1;
 		while (++j < env->len_p)
 		{
-			env->map[i][j]->x += env->x_off * env->zoom;
-			env->map[i][j]->y += env->y_off * env->zoom;
+			env->map[i][j]->x += env->x_off * zoom;
+			env->map[i][j]->y += env->y_off * zoom;
 		}
 	}
 }
@@ -61,16 +63,16 @@ static void		expose_point(t_point *p, t_env *env)
 
 	ty = p->y;
 	tz = p->z;
-	p->y = WINDOW_H / 2 + ty * cos(d_to_r(env->rx)) + tz * sin(d_to_r(env->rx));
+	p->y = ty * cos(d_to_r(env->rx)) + tz * sin(d_to_r(env->rx));
 	p->z = -ty * sin(d_to_r(env->rx)) + tz * cos(d_to_r(env->rx));
 	tx = p->x;
 	tz = p->z;
-	p->x = WINDOW_W / 2 + tx * cos(d_to_r(env->ry)) + tz * sin(d_to_r(env->ry));
+	p->x = tx * cos(d_to_r(env->ry)) + tz * sin(d_to_r(env->ry));
 	p->z = -tx * sin(d_to_r(env->ry)) + tz * cos(d_to_r(env->ry));
-	tx = p->x - WINDOW_W / 2;
-	ty = p->y - WINDOW_H / 2;
-	p->x = WINDOW_W / 2 + tx * cos(d_to_r(env->rz)) - ty * sin(d_to_r(env->rz));
-	p->y = WINDOW_H / 2 + tx * sin(d_to_r(env->rz)) + ty * cos(d_to_r(env->rz));
+	tx = p->x;
+	ty = p->y;
+	p->x = tx * cos(d_to_r(env->rz)) - ty * sin(d_to_r(env->rz)) + (WINDOW_W / 2);
+	p->y = tx * sin(d_to_r(env->rz)) + ty * cos(d_to_r(env->rz)) + (WINDOW_H / 2);
 }
 
 void			expose_points(t_env *env)

@@ -29,9 +29,15 @@ static void	key_hook_add(int keycode, t_env *env, int *is_ck)
 	if (keycode == KRZR && (*is_ck = 1))
 		env->rz = (env->rz + 10) % 360;
 	if (keycode == ZIN && (*is_ck = 1))
+	{
 		env->zoom += 1;
+		ft_printf("Zoom is: %i\n", env->zoom);
+	}
 	if (keycode == ZOUT && (*is_ck = 1))
+	{
 		env->zoom = (env->zoom == 1) ? 1 : (env->zoom - 1);
+		ft_printf("Zoom is: %i\n", env->zoom);
+	}
 	if (keycode == ZUP && (*is_ck = 1))
 		env->z_mult += 1;
 	if (keycode == ZDOWN && (*is_ck = 1))

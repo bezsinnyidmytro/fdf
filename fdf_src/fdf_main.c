@@ -1,5 +1,7 @@
 #include "fdf.h"
 
+// Problems with zoom+offset
+
 void		get_color(t_point *p, int z_mult)
 {
 	int		dmn;
