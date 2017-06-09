@@ -26,7 +26,7 @@ void			process_zoom(t_env *env)
 			env->map[i][j]->x = env->map[i][j]->sx * env->zoom;
 			env->map[i][j]->y = env->map[i][j]->sy * env->zoom;
 			env->map[i][j]->z = env->map[i][j]->sz * (double)(env->zoom)
-				/ 20.0 * (double)env->z_mult;
+				/ 10.0 * (double)env->z_mult;
 		}
 	}
 }

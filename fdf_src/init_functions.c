@@ -53,6 +53,8 @@ t_env		*init_env(int *sizes)
 {
 	t_env	*env;
 
+	if (sizes[0] == 1 || sizes[1] == 1)
+		error_call("Provided map is not a surface");
 	env = (t_env *)malloc(sizeof(t_env));
 	if (!env)
 		perror("Error.");

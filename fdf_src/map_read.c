@@ -51,6 +51,11 @@ static int	*check_map(char *file_name)
 	while (get_next_line(fd, &line) > 0)
 	{
 		l_count++;
+		// if (!ft_checkstr(line, &ft_isdss))
+ 	// 	{
+ 	// 		free(line);
+ 	// 		error_call("Map error. Bad character");
+ 	// 	}
 		str_arr = ft_strsplit(line, ' ');
 		if (l_count > 1)
 		{
@@ -106,6 +111,8 @@ void		process_file(char *file_name, t_env **env)
 		j = -1;
 		while (str_arr[++j])
 		{
+			if (!ft_isdss(str_arr[j][0]))
+				error_call("Map error. Bad character");
 			(*env)->map[i][j]->sx = (j - (*env)->len_p / 2);
 			(*env)->map[i][j]->sy = (i - (*env)->len_l / 2);
 			(*env)->map[i][j]->sz = ft_atoi(str_arr[j]);
