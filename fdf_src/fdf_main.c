@@ -19,12 +19,12 @@ int			*brasenham_init(t_point *t0, t_point *t1)
 	data = (int *)malloc(sizeof(int) * 5);
 	if (!data)
 		error_call("Malloc error");
-	data[0] = abs(t1->x - t0->x);				// dx
-	data[1] = t0->x < t1->x ? 1 : -1;			// sx
-	data[2] = -abs(t1->y - t0->y);				// dy
-	data[3] = t0->y < t1->y ? 1 : -1;			// sy
-	data[4] = data[0] + data[2];				// err
-	return (data); 
+	data[0] = abs(t1->x - t0->x);
+	data[1] = t0->x < t1->x ? 1 : -1;
+	data[2] = -abs(t1->y - t0->y);
+	data[3] = t0->y < t1->y ? 1 : -1;
+	data[4] = data[0] + data[2];
+	return (data);
 }
 
 void		brasenham_line(void *mlx, void *win, t_point t0, t_point t1)

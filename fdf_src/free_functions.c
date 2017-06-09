@@ -14,17 +14,13 @@
 
 void		free_env(t_env *env)
 {
-	int		i;		// что когда нужно фришить - не понятно при выходе "крестиком" - ошибка автобуа или сегфолт
+	int		i;
 	int		j;
 
 	if (env->win)
 		mlx_destroy_window(env->mlx, env->win);
 	if (env->mlx)
 		free(env->mlx);
-	if (env->img)
-		free(env->img);
-	if (env->cntr)
-		free(env->cntr);
 	if (env->map)
 	{
 		i = -1;

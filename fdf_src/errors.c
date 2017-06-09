@@ -49,3 +49,29 @@ int			is_inwindow(int x, int y)
 		return (0);
 	return (1);
 }
+
+void		line_check(int p_count, char **str_arr, char *line)
+{
+	if (p_count != count_p(str_arr))
+	{
+		free(line);
+		strarr_free(str_arr);
+		free(str_arr);
+		error_call("Map error. Inconsistent number of points");
+	}
+}
+
+int			count_p(char **str_arr)
+{
+	int		p_c;
+
+	p_c = 0;
+	if (!str_arr)
+		return (p_c);
+	while (*str_arr)
+	{
+		p_c++;
+		str_arr++;
+	}
+	return (p_c);
+}

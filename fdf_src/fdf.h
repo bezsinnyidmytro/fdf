@@ -71,7 +71,6 @@ typedef struct		s_point {
 typedef struct		s_env {
 	void			*mlx;
 	void			*win;
-	void			*img;
 	int				rx;
 	int				ry;
 	int				rz;
@@ -103,5 +102,7 @@ void				draw_lines(t_env *env);
 void				get_color(t_point *p, int z_mult);
 void				put_controls(t_env *env);
 int					is_inwindow(int x, int y);
+void				line_check(int p_count, char **str_arr, char *line);
+int					count_p(char **str_arr);
 
 #endif

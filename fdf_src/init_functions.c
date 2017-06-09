@@ -64,13 +64,11 @@ t_env		*init_env(int *sizes)
 	env->win = mlx_new_window(env->mlx, WINDOW_W, WINDOW_H, "42fdf");
 	if (!env->win)
 		perror("Error.");
-	env->img = NULL;
 	env->rx = ROT_X;
 	env->ry = ROT_Y;
 	env->rz = ROT_Z;
 	env->zoom = calc_zoom(sizes);
 	env->z_mult = 1;
-	env->cntr = NULL;
 	env->map = init_map(sizes);
 	env->len_l = sizes[0];
 	env->len_p = sizes[1];

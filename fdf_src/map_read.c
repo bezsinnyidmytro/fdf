@@ -12,21 +12,6 @@
 
 #include "fdf.h"
 
-static int	count_p(char **str_arr)
-{
-	int		p_c;
-
-	p_c = 0;
-	if (!str_arr)
-		return (p_c);
-	while (*str_arr)
-	{
-		p_c++;
-		str_arr++;
-	}
-	return (p_c);
-}
-
 static int	*parse_size(int lines, int points)
 {
 	int		*sizes;
@@ -51,22 +36,9 @@ static int	*check_map(char *file_name)
 	while (get_next_line(fd, &line) > 0)
 	{
 		l_count++;
-		// if (!ft_checkstr(line, &ft_isdss))
- 	// 	{
- 	// 		free(line);
- 	// 		error_call("Map error. Bad character");
- 	// 	}
 		str_arr = ft_strsplit(line, ' ');
 		if (l_count > 1)
-		{
-			if (p_count != count_p(str_arr))
-			{
-				free(line);
-				strarr_free(str_arr);
-				free(str_arr);
-				error_call("Map error. Inconsistent number of points");
-			}
-		}
+			line_check(p_count, str_arr, line);
 		p_count = count_p(str_arr);
 		free(line);
 		strarr_free(str_arr);
@@ -90,20 +62,13 @@ static int	*check_file(char *file_name)
 	return (check_map(file_name));
 }
 
-void		process_file(char *file_name, t_env **env)
+void		fill_env(int fd, t_env **env)
 {
-	int			fd;
-	int			*sizes;
-	char		*line;
-	char		**str_arr;
-	int			i;
-	int			j;
+	int		i;
+	int		j;
+	char	*line;
+	char	**str_arr;
 
-	fd = open(file_name, O_RDONLY);
-	sizes = check_file(file_name);		// check sizes for being 1 row or 1 col
-	(*env) = init_env(sizes);
-	free(sizes);
-	//ft_printf("Segfault after\n");
 	i = -1;
 	while (get_next_line(fd, &line) && ++i > -1)
 	{
@@ -116,11 +81,22 @@ void		process_file(char *file_name, t_env **env)
 			(*env)->map[i][j]->sx = (j - (*env)->len_p / 2);
 			(*env)->map[i][j]->sy = (i - (*env)->len_l / 2);
 			(*env)->map[i][j]->sz = ft_atoi(str_arr[j]);
-			//get_color((*env)->map[i][j]);
 		}
 		strarr_free(str_arr);
 		free(line);
 		free(str_arr);
 	}
+}
+
+void		process_file(char *file_name, t_env **env)
+{
+	int		fd;
+	int		*sizes;
+
+	fd = open(file_name, O_RDONLY);
+	sizes = check_file(file_name);
+	(*env) = init_env(sizes);
+	free(sizes);
+	fill_env(fd, env);
 	close(fd);
 }
