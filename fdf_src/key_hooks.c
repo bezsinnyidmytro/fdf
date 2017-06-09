@@ -27,8 +27,7 @@ void		put_controls(t_env *env)
 	controls = "Z-Rotate: num4, num6";
 	mlx_string_put(env->mlx, env->win, 20, 100, 0xFFFFFF, controls);
 	controls = "Z-Slope: *, /";
-	mlx_string_put(env->mlx, env->win, 20, 120, 0xFFFFFF, controls);
-	
+	mlx_string_put(env->mlx, env->win, 20, 120, 0xFFFFFF, controls);	
 }
 
 void		redraw_window(int is_control_key, t_env *env)
@@ -50,13 +49,15 @@ static void	key_hook_add(int keycode, t_env *env, int *is_ck)
 		env->rz = (env->rz + 10) % 360;
 	if (keycode == ZIN && (*is_ck = 1))
 	{
-		env->zoom = (env->zoom >= 64) ? (env->zoom * 2) : (env->zoom + 1); 
+		// env->zoom = (env->zoom >= 64) ? (env->zoom * 2) : (env->zoom + 1); 
+		// env->zoom = (env->zoom >= 4096) ? 4096 : env->zoom;
+		env->zoom = (env->zoom >= 60) ? (env->zoom + 10) : (env->zoom + 1); 
 		env->zoom = (env->zoom >= 4096) ? 4096 : env->zoom;
 		ft_printf("Zoom is: %i\n", env->zoom);
 	}
 	if (keycode == ZOUT && (*is_ck = 1))
 	{
-		env->zoom = (env->zoom > 64) ? (env->zoom / 2) : (env->zoom - 1);
+		env->zoom = (env->zoom > 60) ? (env->zoom - 10) : (env->zoom - 1);
 		env->zoom = (env->zoom <= 1) ? 1 : env->zoom;
 		ft_printf("Zoom is: %i\n", env->zoom);
 	}

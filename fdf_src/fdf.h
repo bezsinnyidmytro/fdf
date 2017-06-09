@@ -102,5 +102,6 @@ void				expose_points(t_env *env);
 void				draw_lines(t_env *env);
 void				get_color(t_point *p, int z_mult);
 void				put_controls(t_env *env);
+int					is_inwindow(int x, int y);
 
 #endif

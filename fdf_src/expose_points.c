@@ -37,8 +37,6 @@ void			process_offset(t_env *env)
 	int			j;
 	int			zoom;
 
-	//zoom = (env->zoom > 30) ? env->zoom : 30;
-	//zoom = env->zoom;
 	zoom = 30;
 	i = -1;
 	while (++i < env->len_l)
@@ -73,8 +71,10 @@ static void		expose_point(t_point *p, t_env *env)
 	p->z = -tx * sin(d_to_r(env->ry)) + tz * cos(d_to_r(env->ry));
 	tx = p->x;
 	ty = p->y;
-	p->x = tx * cos(d_to_r(env->rz)) - ty * sin(d_to_r(env->rz)) + (WINDOW_W / 2);
-	p->y = tx * sin(d_to_r(env->rz)) + ty * cos(d_to_r(env->rz)) + (WINDOW_H / 2);
+	p->x = tx * cos(d_to_r(env->rz)) - ty * sin(d_to_r(env->rz)) +
+			(WINDOW_W / 2);
+	p->y = tx * sin(d_to_r(env->rz)) + ty * cos(d_to_r(env->rz)) +
+			(WINDOW_H / 2);
 }
 
 void			expose_points(t_env *env)

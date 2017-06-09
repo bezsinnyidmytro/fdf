@@ -1,95 +1,58 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf_main.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbezsinn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/06/09 16:39:00 by dbezsinn          #+#    #+#             */
+/*   Updated: 2017/06/09 16:39:02 by dbezsinn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
-// Problems with zoom+offset
-
-void		get_color(t_point *p, int z_mult)
+int			*brasenham_init(t_point *t0, t_point *t1)
 {
-	int		dmn;
+	int		*data;
 
-	dmn = p->sz * z_mult;
-	if (dmn < -10)
-	{
-		if (dmn >= -250)
-			p->color = (0x006600 + (-dmn));
-		else
-			p->color = (0x0066FF);
-	}
-	else if (dmn > 10)
-	{
-		if (dmn <= 250)
-			p->color = (0x006600 + ((dmn) << 16));
-		else
-			p->color = (0xFF6600);
-	}
-	else
-		p->color = (0x006600);
-	// ft_printf("Z is: %i\n", p->z);
-}
-
-int			is_inwindow(int x, int y)
-{
-	if (x > WINDOW_W || y > WINDOW_H)
-		return (0);
-	return (1);
+	data = (int *)malloc(sizeof(int) * 5);
+	if (!data)
+		error_call("Malloc error");
+	data[0] = abs(t1->x - t0->x);				// dx
+	data[1] = t0->x < t1->x ? 1 : -1;			// sx
+	data[2] = -abs(t1->y - t0->y);				// dy
+	data[3] = t0->y < t1->y ? 1 : -1;			// sy
+	data[4] = data[0] + data[2];				// err
+	return (data); 
 }
 
 void		brasenham_line(void *mlx, void *win, t_point t0, t_point t1)
 {
-	int		dx;
-	int		dy;
-	int		sx;
-	int		sy;
-	int		err;
+	int		*d;
 	int		e2;
 
-	dx = abs(t1.x - t0.x);
-	sx = t0.x < t1.x ? 1 : -1;
-	dy = -abs(t1.y - t0.y);
-	sy = t0.y < t1.y ? 1 : -1;
-	err = dx + dy;
+	d = brasenham_init(&t0, &t1);
 	while (1)
 	{
 		if (is_inwindow(t0.x, t0.y))
 			mlx_pixel_put(mlx, win, t0.x, t0.y, t0.color);
 		if (t0.x == t1.x && t0.y == t1.y)
-			break;
-		e2 = 2 * err;
-		if (e2 > dy)
+			break ;
+		e2 = 2 * d[4];
+		if (e2 > d[2])
 		{
-			err += dy;
-			t0.x += sx;
+			d[4] += d[2];
+			t0.x += d[1];
 		}
-		if (e2 < dx)
+		if (e2 < d[0])
 		{
-			err += dx;
-			t0.y += sy;
+			d[4] += d[0];
+			t0.y += d[3];
 		}
 	}
+	free(d);
 }
-
-// void		normalize_points(t_env *env)
-// {
-// 	int		i = -1;
-// 	int		j;
-// 	//int		map_width = env->len_p * XSTEP;
-// 	//int		map_height = env->len_l * YSTEP;
-
-// 	env->x_off = (WINDOW_W) / 2;
-// 	env->y_off = (WINDOW_H) / 2;
-
-// 	ft_printf("The map offset is: %i : %i\n", env->x_off, env->y_off);
-// 	while (++i < env->len_l)
-// 	{
-// 		j = -1;
-// 		while (++j < env->len_p)
-// 		{
-// 			env->map[i][j]->x = env->map[i][j]->sx + env->x_off;
-// 			env->map[i][j]->y = env->map[i][j]->sy + env->y_off;
-// 			env->map[i][j]->z = env->map[i][j]->sz; 
-// 		}
-// 	}
-// 	ft_printf("The math_pi: %lf\n", M_PI);
-// }
 
 void		draw_lines(t_env *env)
 {
@@ -104,9 +67,11 @@ void		draw_lines(t_env *env)
 		{
 			get_color(env->map[i][j], env->z_mult);
 			if (i < env->len_l - 1)
-				brasenham_line(env->mlx, env->win, *(env->map[i][j]), *(env->map[i + 1][j]));
+				brasenham_line(env->mlx, env->win, *(env->map[i][j]),
+					*(env->map[i + 1][j]));
 			if (j < env->len_p - 1)
-				brasenham_line(env->mlx, env->win, *(env->map[i][j]), *(env->map[i][j + 1])); 
+				brasenham_line(env->mlx, env->win, *(env->map[i][j]),
+					*(env->map[i][j + 1]));
 		}
 	}
 }
@@ -118,16 +83,13 @@ int			close_x(int keycode, t_env *env)
 	exit(0);
 }
 
-int			main1(int ac, char **av)
+int			main(int ac, char **av)
 {
 	t_env	*env;
 
 	if (ac > 1)
 	{
 		process_file(av[1], &env);
-		//ft_printf("X %i, Y %i, Z %i\n", env->map[1][1]->sx, env->map[1][1]->sy, env->map[1][1]->sz);
-		//brasenhem_line(env->mlx, env->win, 100, 100, 300, 300);
-		//normalize_points(env);
 		process_zoom(env);
 		expose_points(env);
 		process_offset(env);
@@ -136,17 +98,8 @@ int			main1(int ac, char **av)
 		mlx_hook(env->win, 2, 3, key_hook, env);
 		mlx_hook(env->win, 17, 1L << 17, close_x, env);
 		mlx_loop(env->mlx);
-		//free(env);
 	}
 	else
 		ft_printf("Usage: ./fdf <path to map>\n");
-	sleep(1232343);
-	return (1);
-}
-
-int			main(int ac, char **av)
-{
-	main1(ac, av);
-	//sleep(12323453);
 	return (1);
 }
