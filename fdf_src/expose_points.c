@@ -37,7 +37,9 @@ void			process_offset(t_env *env)
 	int			j;
 	int			zoom;
 
-	zoom = (env->zoom > 30) ? env->zoom : 30;
+	//zoom = (env->zoom > 30) ? env->zoom : 30;
+	//zoom = env->zoom;
+	zoom = 30;
 	i = -1;
 	while (++i < env->len_l)
 	{

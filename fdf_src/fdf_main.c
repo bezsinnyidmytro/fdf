@@ -26,6 +26,13 @@ void		get_color(t_point *p, int z_mult)
 	// ft_printf("Z is: %i\n", p->z);
 }
 
+int			is_inwindow(int x, int y)
+{
+	if (x > WINDOW_W || y > WINDOW_H)
+		return (0);
+	return (1);
+}
+
 void		brasenham_line(void *mlx, void *win, t_point t0, t_point t1)
 {
 	int		dx;
@@ -42,7 +49,8 @@ void		brasenham_line(void *mlx, void *win, t_point t0, t_point t1)
 	err = dx + dy;
 	while (1)
 	{
-		mlx_pixel_put(mlx, win, t0.x, t0.y, t0.color);
+		if (is_inwindow(t0.x, t0.y))
+			mlx_pixel_put(mlx, win, t0.x, t0.y, t0.color);
 		if (t0.x == t1.x && t0.y == t1.y)
 			break;
 		e2 = 2 * err;
@@ -87,6 +95,7 @@ void		draw_lines(t_env *env)
 {
 	int		i;
 	int		j;
+
 	i = -1;
 	while (++i < env->len_l)
 	{
@@ -95,24 +104,17 @@ void		draw_lines(t_env *env)
 		{
 			get_color(env->map[i][j], env->z_mult);
 			if (i < env->len_l - 1)
-			{
 				brasenham_line(env->mlx, env->win, *(env->map[i][j]), *(env->map[i + 1][j]));
-			}
 			if (j < env->len_p - 1)
-			{
 				brasenham_line(env->mlx, env->win, *(env->map[i][j]), *(env->map[i][j + 1])); 
-			}
 		}
 	}
 }
 
 int			close_x(int keycode, t_env *env)
 {
-	if (keycode)
+	if (keycode && env)
 		ft_printf("");
-	//mlx_destroy_window(env->mlx, env->win);
-	env->win = NULL;
-	free_env(env);
 	exit(0);
 }
 
@@ -130,7 +132,7 @@ int			main1(int ac, char **av)
 		expose_points(env);
 		process_offset(env);
 		draw_lines(env);
-
+		put_controls(env);
 		mlx_hook(env->win, 2, 3, key_hook, env);
 		mlx_hook(env->win, 17, 1L << 17, close_x, env);
 		mlx_loop(env->mlx);
@@ -145,6 +147,6 @@ int			main1(int ac, char **av)
 int			main(int ac, char **av)
 {
 	main1(ac, av);
-	sleep(12323453);
+	//sleep(12323453);
 	return (1);
 }

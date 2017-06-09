@@ -98,7 +98,7 @@ void		process_file(char *file_name, t_env **env)
 	sizes = check_file(file_name);		// check sizes for being 1 row or 1 col
 	(*env) = init_env(sizes);
 	free(sizes);
-	ft_printf("Segfault after\n");
+	//ft_printf("Segfault after\n");
 	i = -1;
 	while (get_next_line(fd, &line) && ++i > -1)
 	{

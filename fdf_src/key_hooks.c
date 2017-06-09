@@ -12,6 +12,25 @@
 
 #include "fdf.h"
 
+void		put_controls(t_env *env)
+{
+	char	*controls;
+
+	controls = "Move: Left, Right, Up, Down";
+	mlx_string_put(env->mlx, env->win, 20, 20, 0xFFFFFF, controls);
+	controls = "Zoom: +, -";
+	mlx_string_put(env->mlx, env->win, 20, 40, 0xFFFFFF, controls);
+	controls = "X-Rotate: num1, num3";
+	mlx_string_put(env->mlx, env->win, 20, 60, 0xFFFFFF, controls);
+	controls = "Y-Rotate: num2, num5";
+	mlx_string_put(env->mlx, env->win, 20, 80, 0xFFFFFF, controls);
+	controls = "Z-Rotate: num4, num6";
+	mlx_string_put(env->mlx, env->win, 20, 100, 0xFFFFFF, controls);
+	controls = "Z-Slope: *, /";
+	mlx_string_put(env->mlx, env->win, 20, 120, 0xFFFFFF, controls);
+	
+}
+
 void		redraw_window(int is_control_key, t_env *env)
 {
 	if (is_control_key)
@@ -21,6 +40,7 @@ void		redraw_window(int is_control_key, t_env *env)
 		expose_points(env);
 		process_offset(env);
 		draw_lines(env);
+		put_controls(env);
 	}
 }
 
@@ -30,12 +50,14 @@ static void	key_hook_add(int keycode, t_env *env, int *is_ck)
 		env->rz = (env->rz + 10) % 360;
 	if (keycode == ZIN && (*is_ck = 1))
 	{
-		env->zoom += 1;
+		env->zoom = (env->zoom >= 64) ? (env->zoom * 2) : (env->zoom + 1); 
+		env->zoom = (env->zoom >= 4096) ? 4096 : env->zoom;
 		ft_printf("Zoom is: %i\n", env->zoom);
 	}
 	if (keycode == ZOUT && (*is_ck = 1))
 	{
-		env->zoom = (env->zoom == 1) ? 1 : (env->zoom - 1);
+		env->zoom = (env->zoom > 64) ? (env->zoom / 2) : (env->zoom - 1);
+		env->zoom = (env->zoom <= 1) ? 1 : env->zoom;
 		ft_printf("Zoom is: %i\n", env->zoom);
 	}
 	if (keycode == ZUP && (*is_ck = 1))
@@ -63,8 +85,7 @@ int			key_hook(int keycode, t_env *env)
 		mlx_destroy_window(env->mlx, env->win);
 		env->win = NULL;
 		free_env(env);
-		//sleep(12334);
-		exit(0);
+		exit(1);
 	}
 	if (keycode == KRXL && (is_control_key = 1))
 		env->rx = (env->rx - 10) % 360;

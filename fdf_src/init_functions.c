@@ -30,6 +30,25 @@ t_point		***init_map(int *sizes)
 	return (map);
 }
 
+int			calc_zoom(int *sizes)
+{
+	int		max_size;
+
+	max_size = (sizes[0] > sizes[1]) ? sizes[0] : sizes[1];
+	if (max_size >= 500)
+		return (1);
+	else if (max_size >= 250)
+		return (2);
+	else if (max_size >= 100)
+		return (4);
+	else if (max_size >= 50)
+		return (8);
+	else if (max_size >= 25)
+		return (16);
+	else
+		return (32);
+}
+
 t_env		*init_env(int *sizes)
 {
 	t_env	*env;
@@ -47,7 +66,7 @@ t_env		*init_env(int *sizes)
 	env->rx = ROT_X;
 	env->ry = ROT_Y;
 	env->rz = ROT_Z;
-	env->zoom = ZOOM;
+	env->zoom = calc_zoom(sizes);
 	env->z_mult = 1;
 	env->cntr = NULL;
 	env->map = init_map(sizes);

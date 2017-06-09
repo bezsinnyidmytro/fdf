@@ -31,9 +31,9 @@
 # define WINDOW_W	1360
 # define WINDOW_H	768
 
-# define ZOOM 	30
+# define ZOOM 	32
 
-# define ROT_X	30
+# define ROT_X	-30
 # define ROT_Y	-30
 # define ROT_Z	30
 
@@ -101,5 +101,6 @@ void				process_offset(t_env *env);
 void				expose_points(t_env *env);
 void				draw_lines(t_env *env);
 void				get_color(t_point *p, int z_mult);
+void				put_controls(t_env *env);
 
 #endif
